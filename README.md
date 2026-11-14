@@ -1,5 +1,7 @@
 # WoW Forever Level 60 Characters Table
 
+**Sitio publicado:** https://foreverarmory.grok.me
+
 Web app that scrapes public armory data for **World of Warcraft: Forever** (the official permanent level-60 classic experience), filters characters that are level 60, and displays them in a searchable/filterable table.
 
 ## Important Notes
@@ -35,6 +37,8 @@ python app.py
 ```
 
 Then open http://127.0.0.1:5000
+
+The live app is at https://foreverarmory.grok.me
 
 ## Next Steps
 
