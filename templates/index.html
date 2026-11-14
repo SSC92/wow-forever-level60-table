@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoW Forever - Level 60 Characters</title>
+    <style>
+        body { font-family: system-ui, Arial, sans-serif; margin: 2rem; background: #1a1a1a; color: #eee; }
+        h1 { color: #f8d354; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 0.6rem; border-bottom: 1px solid #333; text-align: left; }
+        th { background: #2a2a2a; position: sticky; top: 0; }
+        tr:hover { background: #2d2d2d; }
+        .filters { margin: 1rem 0; }
+        input, select { padding: 0.4rem; margin-right: 0.5rem; background: #333; color: #eee; border: 1px solid #555; }
+        .note { color: #aaa; font-size: 0.9rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <h1>WoW Forever - Personajes Nivel 60</h1>
+    <p>Datos scrapeados de leaderboards públicos (principalmente aotc.gg). Solo se muestran personajes de alto nivel (normalmente 60).</p>
+
+    <div class="filters">
+        <input type="text" id="search" placeholder="Buscar nombre o guild..." onkeyup="filterTable()">
+        <select id="regionFilter" onchange="filterTable()">
+            <option value="">Todas las regiones</option>
+            <option value="EU">EU</option>
+            <option value="US">US</option>
+            <option value="KR">KR</option>
+            <option value="TW">TW</option>
+        </select>
+    </div>
+
+    <table id="charTable">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Nombre</th>
+                <th>Región</th>
+                <th>Ruleset</th>
+                <th>Guild</th>
+                <th>Gear Score</th>
+                <th>Nivel</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in characters %}
+            <tr>
+                <td>{{ c.rank }}</td>
+                <td>{{ c.name }}</td>
+                <td>{{ c.region }}</td>
+                <td>{{ c.ruleset }}</td>
+                <td>{{ c.guild }}</td>
+                <td>{{ c.gear_score }}</td>
+                <td>{{ c.level }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="note">
+        Nota: La API oficial de Blizzard no permite listar todos los personajes. Este proyecto usa datos públicos de sitios terceros.
+        El scraper es básico y puede necesitar ajustes según el HTML actual de aotc.gg.
+    </p>
+
+    <script>
+        function filterTable() {
+            const search = document.getElementById("search").value.toLowerCase();
+            const region = document.getElementById("regionFilter").value;
+            const rows = document.querySelectorAll("#charTable tbody tr");
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                const reg = row.cells[2].innerText;
+                const matchSearch = text.includes(search);
+                const matchRegion = !region || reg === region;
+                row.style.display = (matchSearch && matchRegion) ? "" : "none";
+            });
+        }
+    </script>
+</body>
+</html>
